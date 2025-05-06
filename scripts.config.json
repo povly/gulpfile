@@ -1,0 +1,31 @@
+{
+	"main": {
+		"src": [
+			"src/js/main.js"
+		],
+		"dest": "app/js/",
+		"output": "script.min.js",
+		"watch": [
+			"src/js/main.js"
+		]
+	},
+	"pages": {
+		"src": [
+			"src/js/pages/**/*.js"
+		],
+		"dest": "app/js/pages/",
+		"watch": [
+			"src/js/pages/**/*.js"
+		]
+	},
+	"libraries": {
+		"src": [
+			"node_modules/vanilla-lazyload/dist/lazyload.min.js",
+			"node_modules/swiper/swiper-bundle.min.js"
+		],
+		"dest": "app/js/",
+		"watch": [
+			"node_modules/**/*.js"
+		]
+	}
+}

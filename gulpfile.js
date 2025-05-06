@@ -17,6 +17,17 @@ const { src, dest, parallel, series, watch } = require("gulp"),
 	cached = require('gulp-cached'),
 	dependents = require('gulp-dependents');
 
+const fs = require('fs');
+function loadScriptsConfig() {
+	try {
+		scriptsConfig = JSON.parse(fs.readFileSync('./scripts.config.json'));
+	} catch (err) {
+		console.error('Error loading scripts config:', err);
+	}
+}
+
+loadScriptsConfig();
+
 const arraySrc = {
 	img: {
 		src: ["src/images/**/*.*"],
@@ -94,36 +105,15 @@ function browsersync() {
 	});
 }
 
-function scripts() {
-	return (
-		src([
-			"node_modules/vanilla-lazyload/dist/lazyload.min.js",
-			//   'node_modules/swiper/swiper-bundle.min.js',
-			//   'node_modules/nouislider/dist/nouislider.min.js',
-			// 'node_modules/air-datepicker/air-datepicker.js',
-			// 'node_modules/imask/dist/imask.js',
-			// 'node_modules/split-type/dist/index.js',
-			// 'node_modules/gsap/dist/gsap.min.js',
-			// 'node_modules/gsap/dist/ScrollTrigger.min.js',
-			// 'node_modules/gsap/dist/Draggable.min.js',
-			// 'modules/swiper-master/dist/swiper-bundle.js',
-			//   'node_modules/html2pdf.js/dist/html2pdf.bundle.min.js',
-		])
-			.pipe(newer("app/js/"))
-			.pipe(dest("app/js/"))
-			.pipe(browserSync.stream())
-	);
+function scriptsLibraries() {
+	return src(scriptsConfig.libraries.src)
+		.pipe(newer(scriptsConfig.libraries.dest))
+		.pipe(dest(scriptsConfig.libraries.dest))
+		.pipe(browserSync.stream());
 }
 
 function scriptsMain() {
-	return src([
-		// 'node_modules/imask/dist/imask.js',
-		// 'node_modules/swiffy-slider/dist/js/swiffy-slider.min.js',
-		// 'node_modules/swiffy-slider/dist/js/swiffy-slider-extensions.min.js',
-		// "modules/swiper-master/dist/swiper-bundle.js",
-		// 'node_modules/glightbox/dist/js/glightbox.js',
-		"src/js/main.js",
-	])
+	return src(scriptsConfig.main.src)
 		.pipe(cached('main_script'))
 		.pipe(
 			babel({
@@ -146,16 +136,13 @@ function scriptsMain() {
 				},
 			})
 		)
-		.pipe(concat("script.min.js"))
-		.pipe(dest("app/js/"))
+		.pipe(concat(scriptsConfig.main.output))
+		.pipe(dest(scriptsConfig.main.dest))
 		.pipe(browserSync.stream());
 }
 
 function scriptsPages() {
-	return src([
-		"src/js/pages/**/*.js",
-		"modules/swiper-master/dist/swiper-bundle.js",
-	])
+	return src(scriptsConfig.pages.src)
 		.pipe(cached('pages_scripts'))
 		.pipe(
 			babel({
@@ -170,17 +157,38 @@ function scriptsPages() {
 				],
 			})
 		)
-		.pipe(newer("app/js/pages/"))
-		.pipe(dest("app/js/pages/"))
+		.pipe(newer(scriptsConfig.pages.dest))
+		.pipe(dest(scriptsConfig.pages.dest))
 		.pipe(browserSync.stream());
 }
 
 function startwatch() {
+	let scriptsWatcher;
+
+	function restartScriptsWatchers() {
+		if (scriptsWatcher) scriptsWatcher.close();
+
+		scriptsWatcher = watch([
+			...scriptsConfig.main.watch,
+			...scriptsConfig.pages.watch,
+			...scriptsConfig.libraries.watch,
+			'scripts.config.json'
+		], series(scriptsLibraries, scriptsMain, scriptsPages));
+	}
+
+	// Первоначальная настройка
+	restartScriptsWatchers();
+
+	watch('scripts.config.json', (done) => {
+		loadScriptsConfig();
+		restartScriptsWatchers();
+		done();
+	});
 	watch(["src/images/**/*"], series(optimizeImage, webpImage, avifImage));
 	watch(["src/fonts/**/*.ttf"], processFonts);
-	watch("src/js/main.js", scriptsMain);
-	watch("src/js/pages/**/*.js", scriptsPages);
-	watch("node_modules/**/*.js", scripts);
+	watch(scriptsConfig.main.watch, scriptsMain);
+	watch(scriptsConfig.pages.watch, scriptsPages);
+	watch(scriptsConfig.libraries.watch, scriptsLibraries);
 	watch(["src/pug/**/*.pug"], pugg);
 	watch("src/" + preprocessor + "/**/*", styles_part);
 	watch("src/" + preprocessor + "/**/*", styles);
@@ -229,7 +237,7 @@ function styles() {
 }
 
 exports.browsersync = browsersync;
-exports.scripts = scripts;
+exports.scriptsLibraries = scriptsLibraries;
 exports.scriptsMain = scriptsMain;
 exports.scriptsPages = scriptsPages;
 exports.styles = styles;
@@ -248,7 +256,7 @@ exports.default = parallel(
 	processFonts,
 	styles,
 	styles_part,
-	scripts,
+	scriptsLibraries,
 	scriptsMain,
 	scriptsPages,
 	browsersync,

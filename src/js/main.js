@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	function removeModal(element) {
 		element.classList.remove("active");
 		document.body.style.overflow = "";
-	}
+	} 
 
 	function resetEvent(e) {
 		e.preventDefault();
