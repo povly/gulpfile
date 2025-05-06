@@ -2,11 +2,11 @@
 
 Эта сборка предназначена для упрощения процесса верстки с использованием Gulp. Она включает в себя:
 
-1. SASS
-2. PUG
+1. SASS/SCSS - препроцессор css
+2. PUG - шаблонизатор HTML
 3. Оптимизация изображении (png, jpg, webp, avif)
 4. Конвертация шрифтов через ttf в woff, woff2
-5. Тестирование верстки на Safari - библиотека @playwright/test. Ссылка: https://srkdesign.pro/blog/testing-websites-in-safari-on-windows/
+5. Тестирование верстки на Safari - библиотека @playwright/test. Ссылка: [как работать с этой библиотекой или зайдите в документацию](https://srkdesign.pro/blog/testing-websites-in-safari-on-windows/)
 
 ## Установка
 
