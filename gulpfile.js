@@ -80,7 +80,7 @@ function processFonts() {
 
 function pugg() {
 	return src(["src/pug/pages/**/*.pug"])
-		.pipe(cached('pug'))
+		// .pipe(cached('pug'))
 		.pipe(pug({ pretty: true }))
 		.pipe(dest(arraySrc.app.url))
 		.pipe(browserSync.stream());

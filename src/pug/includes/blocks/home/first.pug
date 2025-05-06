@@ -1,13 +1,22 @@
-//- .m-first
-//- 	.m-first__bg.p-bg.img_full.p-overlay
-//- 		+picture('img/home/first/bg.jpg', 'img/home/first/bg', false, false, '', 1920, 1080, '', '', '')
-//- 		+picture('img/home/first/bg_mb.jpg', 'img/home/first/bg_mb', false, false, '', 320, 691, '', '', '')
-//- 	.container.m-first__container
-//- 		.m-first__subtitle.p-font-size Рассрочка 0-0-24
-//- 		.m-first__bottom
-//- 			.m-first__bottom-left
-//- 				.m-first__title.p-title.p-font-size.p-width Изготовление и&nbsp;монтаж премиум Шкафов-купе в&nbsp;Сочи
-//- 				.m-first__end.p-font-size Скидка 50% на&nbsp;все шкафы-купе до&nbsp;31 сентября
-//- 			.m-first__bottom-right
-//- 				.m-first__btn._white.p-btn Заказать бесплатный замер
-//- 				.m-first__btn._sec.p-btn Рассчитать стоимость
+//- +picture({
+//-   src: 'img/photo.jpg',
+//-   lazy: false,
+//-   classes: '',
+//-   width: 800,
+//-   height: 600,
+//-   sizes: '(max-width: 600px) 100vw, 50vw',
+//-   srcset: 'img/photo.jpg 800w, img/photo@2x.jpg 1600w',
+//-   alt: 'test',
+//-   formats: [
+//-     {
+//-       type: 'avif',
+//-       src: 'img/photo.avif',
+//-       srcset: 'img/photo.avif 800w, img/photo@2x.avif 1600w'
+//-     },
+//-     {
+//-       type: 'webp',
+//-       src: 'img/photo.webp',
+//-       srcset: 'img/photo.webp 800w, img/photo@2x.webp 1600w'
+//-     }
+//-   ]
+//- })
