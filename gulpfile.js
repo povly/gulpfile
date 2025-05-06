@@ -163,17 +163,22 @@ function scriptsPages() {
 }
 
 function startwatch() {
-	let scriptsWatcher;
 
+	// Без scriptsWatcher	                                        Со scriptsWatcher
+	// Конфиг обновляется, но пути отслеживания остаются старыми	Пути всегда актуальны
+	// Невозможно удалить устаревшие пути	                        Автоматически очищает предыдущие вотчеры
+	// Риск "утечки" памяти из - за накопления вотчеров	            Контролируемое управление ресурсами
+
+	let scriptsWatcher;
 	function restartScriptsWatchers() {
-		if (scriptsWatcher) scriptsWatcher.close();
+		if (scriptsWatcher) scriptsWatcher.close();  // Закрываем старый
 
 		scriptsWatcher = watch([
 			...scriptsConfig.main.watch,
 			...scriptsConfig.pages.watch,
 			...scriptsConfig.libraries.watch,
 			'scripts.config.json'
-		], series(scriptsLibraries, scriptsMain, scriptsPages));
+		], series(scriptsLibraries, scriptsMain, scriptsPages)); // Создаём новый
 	}
 
 	// Первоначальная настройка
