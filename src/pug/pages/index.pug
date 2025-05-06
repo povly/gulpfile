@@ -1,0 +1,19 @@
+extends ../layout/layout.pug
+block vars
+	- var title = 'Главная';
+block styles
+	link(rel="stylesheet" href="css/parts/swiper.css")
+	include ../includes/styles/styles.pug
+	link(rel="stylesheet" href="css/parts/home.css")
+block header
+	include ../includes/header/header.pug
+block content
+	main
+		include ../includes/blocks/home/first.pug
+block footer
+	include ../includes/footer/footer.pug
+block scripts
+	script(src="js/pages/swiper-bundle.js")
+	include ../includes/scripts/scripts.pug
+	//- script(src="js/pages/home/m-com.js")
+	//- script(src="js/pages/home/m-reviews.js")

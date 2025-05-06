@@ -1,0 +1,115 @@
+@import ../functions/index
+@import ../functions/placeholder
+\:root
+	--font-inter: "Inter", sans-serif
+	--font-neutral-face: "Neutral Face", sans-serif
+	--font-arial: "Arial", sans-serif
+	--color-white: #fff
+	--color-black: #121212
+	--color-gray: #aaa
+html
+	scroll-behavior: smooth
+
+.disabled
+	pointer-events: none
+
+label
+	cursor: pointer
+
+body
+	font-family: var(--font-inter)
+	line-height: normal
+	font-weight: 400
+	position: relative
+	font-size: 20px
+	color: var(--color-black)
+	background: var(--color-white)
+	--min-viewport-width: 1200
+	--max-viewport-width: 1920
+
+main
+	overflow: hidden
+	position: relative
+
+img, svg, picture
+	display: flex
+	user-select: none
+
+strong, b
+	font-weight: 700
+
+.p-font-size
+	--font-size: calc((var(--min-font-size) * 1px) + (var(--max-font-size) - var(--min-font-size)) * ((100vw - var(--min-viewport-width) * 1px) / (var(--max-viewport-width) - var(--min-viewport-width))))
+	font-size: var(--font-size)
+.p-width
+	--width: calc((var(--min-width) * 1px) + (var(--max-width) - var(--min-width)) * ((100vw - var(--min-viewport-width) * 1px) / (var(--max-viewport-width) - var(--min-viewport-width))))
+	width: var(--width)
+
+.container
+	width: 100%
+	z-index: 3
+	max-width: var(--container-width, 100%)
+	margin: 0 auto
+	padding: 0 30px
+	position: relative
+
+.img
+	&_full
+		width: 100%
+		height: 100%
+		:is(picture, img, video)
+			object-fit: cover
+			width: 100%
+			height: 100%
+
+.p
+	&-sect
+		padding-top: 110px
+	&-title
+		--min-font-size: 50
+		--max-font-size: 80
+		text-transform: uppercase
+		font-family: var(--font-neutral-face)
+		&._right
+			text-align: right
+	&-page
+		padding-top: 128px
+
+.rank-math-breadcrumb
+	font-size: 16px
+	color: #aaa
+
+body .wpcf7 form .wpcf7-response-output
+	margin: 10px 0 0
+	font-size: 14px
+
+:is(.navigation, .pagination)
+	margin-top: 30px
+	.nav-links
+		display: flex
+		justify-content: center
+		gap: 10px
+	.page-numbers
+		border: 1px solid var(--color-black)
+		padding: 5px 10px
+		&.current
+			background: var(--color-black)
+			color: var(--color-white)
+
+.acf-innerblocks-container
+	> *
+		margin: 30px 0
+	> p
+		margin: 15px 0
+	:is(h1,h2,h3,h4,h5,h6)
+		font-weight: 700
+	h2
+		font-size: 34px
+	h3
+		font-size: 32px
+	h4
+		font-size: 30px
+	h5
+		font-size: 28px
+	h6
+		font-size: 26px

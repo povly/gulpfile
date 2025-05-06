@@ -1,0 +1,17 @@
+@function pFontSizeRemPC($f, $s: 18)
+  @return calc($f/$s)+rem
+
+@function calcFluidFontSize($f-min, $f-max, $v-min, $v-max)
+  $k: calc(($f-max - $f-min) / ($v-max - $v-min))
+  $b: $f-min - $k * $v-min
+  $b: $b * 1px
+  @return calc( #{$k} * 100vw + #{$b} )
+
+@function pGetWidth($min, $container)
+  @return calc($min / $container * 100%)
+
+@function pGetVw($fz, $min, $container)
+  @return calc($fz * ((100vw - $min) / $container))
+
+@function pGetVwToPx($min, $max)
+  @return calc(($min / $max) * 100vw)

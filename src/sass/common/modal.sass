@@ -1,0 +1,69 @@
+@import ../functions/index
+@import ../functions/placeholder
+.modal
+	top: 0
+	left: 0
+	width: 100%
+	height: 100%
+	position: fixed
+	opacity: 0
+	visibility: hidden
+	z-index: -1
+	-webkit-overflow-scrolling: touch
+	overflow: hidden
+	overflow-y: scroll
+	transition: .3s
+	background: rgba(#000, 0.4)
+	cursor: pointer
+	--width-content: 100%
+	--modal-item-right: 639px
+	&.active
+		opacity: 1
+		visibility: visible
+		z-index: 105
+	&__table
+		display: table
+		width: 100%
+		height: 100%
+	&__ceil
+		display: table-cell
+		vertical-align: middle
+	&__show, &__close
+		cursor: pointer
+	&__close
+		top: 25px
+		right: 25px
+		position: absolute
+		z-index: 5
+	&__content
+		max-width: var(--width-modal-content, 1600px)
+		margin: 50px auto
+		position: relative
+		cursor: default
+		background: var(--color-white)
+		border: 1px solid rgba(0, 0, 0, 0.2)
+		border-radius: 20px
+		padding: 86px 85px 109px 43px
+	&__title
+		line-height: 120%
+		font-family: var(--font-neutral-face)
+		--min-font-size: 48
+		--max-font-size: 68
+		--min-width: 633
+		--max-width: 833
+		margin-bottom: 76px
+	&__item
+		display: flex
+		gap: 64px
+		&-right
+			width: var(--modal-item-right)
+		&-left
+			width: calc(100% - 64px - var(--modal-item-right))
+		&-subtitle
+			--min-font-size: var(--width-modal-subtitle-min, 20)
+			--max-font-size: var(--width-modal-subtitle-max, 25)
+			min-height: 168px
+			&_2
+				margin-top: 36px
+				font-size: 17px
+				max-width: var(--width-modal-subtitle-2, 644px)
