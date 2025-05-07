@@ -1,7 +1,7 @@
-@use "sass:math"
+@use 'sass:math'
 @function px-to-vw($px, $viewport: 1920)
-	@return calc($px / $viewport) * 100vw
+  @return calc($px / $viewport) * 100vw
 @function fluid-font-size($min-font-size, $max-font-size, $min-viewport-width, $max-viewport-width)
-	$font-size-range: $max-font-size - $min-font-size
-	$viewport-range: $max-viewport-width - $min-viewport-width
-	@return calc(#{$min-font-size}px + #{$font-size-range} * ((100vw - #{$min-viewport-width}px) / #{$viewport-range}))
+  $font-size-range: $max-font-size - $min-font-size
+  $viewport-range: $max-viewport-width - $min-viewport-width
+  @return calc(#{$min-font-size}px + #{$font-size-range} * ((100vw - #{$min-viewport-width}px) / #{$viewport-range}))
